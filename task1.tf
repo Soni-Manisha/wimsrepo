@@ -135,7 +135,7 @@ resource "aws_s3_bucket_object" "object" {
   bucket = "manisha23"
   key    = "teraimage.jpg"
   source = "Terraform-main-image.jpg"
-  acl = "public-read"
+  acl = "aws_s3_bucket_acl"
 
   # The filemd5() function is available in Terraform 0.11.12 and later
   # For Terraform 0.11.11 and earlier, use the md5() function and the file() function:
@@ -147,7 +147,7 @@ locals {
 }
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
-depends_on = [aws_instance.web,aws_s3_bucket_object.object,]
+depends_on = [aws_instance.web,aws_s3_bucket.object,]
   origin {
     domain_name = "manisha23.s3.amazonaws.com"
     origin_id   = "${local.s3_origin_id}"
